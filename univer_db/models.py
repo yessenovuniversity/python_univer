@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
-from orm import get_base
+from .orm import get_base
 
 
 Base = get_base()

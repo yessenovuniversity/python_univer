@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-from config import config
+from .config import config
 
 
 engine = create_engine('mssql+pyodbc://{}:{}@{}/{}'.format(config.user, config.password, config.host, config.name))
