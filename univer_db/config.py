@@ -5,10 +5,3 @@ class Config:
         self.name = name,
         self.user = user,
         self.password = password
-
-
-config = None
-
-
-def set_config(_config):
-    config = _config

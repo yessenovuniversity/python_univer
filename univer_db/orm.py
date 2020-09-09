@@ -2,13 +2,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-from .config import config
-
 
 Base = declarative_base()
 
 
-def get_session():
+def get_session(config):
     engine = create_engine('mssql+pyodbc://{}:{}@{}/{}'.format(config.user, config.password, config.host, config.name))
     conn = engine.connect()
 
