@@ -45,3 +45,28 @@ class Student(Base):
     
     def __str__(self):
         return ' '.join(filter(None, [self.last_name, self.first_name, self.middle_name]))
+
+
+class Personnel(Base):
+    """
+    Модель "Сотрудник"
+    """
+    __tablename__ = 'univer_personal'
+
+    id = Column('personal_id', Integer, primary_key=True)
+    user_id = Column('user_id', ForeignKey('univer_users.user_id'))
+    user = relationship('User')
+    status = Column('status', Integer)
+    last_name = Column('personal_sname', String(200))
+    first_name = Column('personal_name', String(100))
+    middle_name = Column('personal_father_name', String(100))
+    work_email = Column('personal_work_email', String(50))
+    identify_code = Column('personal_identification_number', String(150))
+
+    def __repr__(self):
+        full_name = ' '.join(filter(None, [self.last_name, self.first_name, self.middle_name]))
+
+        return '<Personnel {}>'.format(full_name)
+    
+    def __str__(self):
+        return ' '.join(filter(None, [self.last_name, self.first_name, self.middle_name]))

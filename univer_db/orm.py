@@ -7,7 +7,7 @@ Base = declarative_base()
 
 
 def get_session(config):
-    engine = create_engine('mssql+pyodbc://{}:{}@{}/{}?driver=FreeTDS'.format(config.user, config.password, config.host, config.name))
+    engine = create_engine('mssql+pyodbc://{}:{}@{}'.format(config.user, config.password, config.host))
     conn = engine.connect()
 
     Session = sessionmaker(bind=engine)
