@@ -37,6 +37,7 @@ class Student(Base):
     first_name = Column('students_name', String(100))
     middle_name = Column('students_father_name', String(100))
     email = Column('students_email', String(25))
+    identify_code = Column('students_identify_code', String(50))
 
     def __repr__(self):
         full_name = ' '.join(filter(None, [self.last_name, self.first_name, self.middle_name]))
