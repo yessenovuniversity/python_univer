@@ -208,7 +208,7 @@ class Attendance(Base):
     __tablename__ = 'univer_attendance'
 
     date = Column('att_date', Date, primary_Key=True)
-    grade = Column('ball', Column(Float))
+    grade = Column('ball', Float)
     was = Column(Boolean)
     student_id = Column(ForeignKey('univer_students.students_id'), primary_key=True)
     student = relationship(Student)
