@@ -1,10 +1,78 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, Date
 from sqlalchemy.orm import relationship
 
 from .orm import get_base
 
 
 Base = get_base()
+
+
+class Speciality(Base):
+    """
+    Модель "Специальность"
+    """
+
+    __tablename__ = 'univer_speciality'
+
+    id = Column('speciality_id', Integer, primary_key=True)
+    name_ru = Column('speciality_name_ru', String(200))
+    code = Column('speciality_okpd', String(10))
+
+    def __repr__(self):
+        return "<Speciality {} - {}>".format(self.code, self.name_ru)
+    
+    def __str__(self):
+        return "{} - {}".format(self.code, self.name_ru)
+
+
+class Subject(Base):
+    """
+    Модель "Дисциплина"
+    """
+
+    __tablename__ = 'univer_subject'
+
+    id = Column('subject_id', Integer, primary_key=True)
+    name_kz = Column('subject_name_kz', String(500))
+    name_ru = Column('subject_name_ru', String(500))
+    name_en = Column('subject_name_en', String(500))
+    status = Column(Integer)
+
+    def __repr__(self):
+        return '<Subject {}>'.format(self.name_ru)
+    
+    def __str__(self):
+        return self.name_ru
+
+
+class EducType(Base):
+    __tablename__ = 'univer_educ_type'
+
+    id = Column('educ_type_id', Integer, primary_key=True)
+    name_ru = Column('educ_type_name_ru', String(100))
+
+    def __repr__(self):
+        return '<EducType {}>'.format(self.name_ru)
+
+    def __str__(self):
+        return self.name_ru
+
+
+class LangDivision(Base):
+    """
+    Модель "Языковый отдел"
+    """
+
+    __tablename__ = 'univer_lang_division'
+
+    id = Column('lang_division_id', Integer, primary_key=True)
+    name_ru = Column('lang_division_name_ru', String(100))
+
+    def __repr__(self):
+        return '<LangDivision {}>'.format(self.name_ru)
+    
+    def __str__(self):
+        return self.name_ru
 
 
 class User(Base):
@@ -71,3 +139,118 @@ class Personnel(Base):
     
     def __str__(self):
         return ' '.join(filter(None, [self.last_name, self.first_name, self.middle_name]))
+
+
+class Teacher(Base):
+    """
+    Модель "Преподаватель"
+    """
+
+    __tablename__ = 'univer_teacher'
+
+    id = Column('teacher_id', Integer, primary_key=True)
+    personnel_id = Column('personal_id', ForeignKey('univer_personal.personal_id'))
+    personnel = relationship('Personnel')
+    status = Column('status', Integer)
+
+    def __repr__(self):
+        return '<Teacher {}>'.format(self.personnel)
+    
+    def __str__(self):
+        return str(self.personnel)
+
+
+class EducPlan(Base):
+    """
+    Модель "Учебный план"
+    """
+
+    __tablename__ = 'univer_educ_plan'
+
+    id = Column('educ_plan_id', Integer, primary_key=True)
+    speciality_id = Column('speciality_id', ForeignKey('univer_speciality.speciality_id'))
+    speciality = relationship(Speciality)
+    year = Column('educ_plan_adm_year', Integer)
+
+    def __repr__(self):
+        return "<EducPlan {} {}>".format(self.speciality, self.year)
+    
+    def __str__(self):
+        return "{} {}".format(self.speciality, self.year)
+
+
+class EducPlanPos(Base):
+    """
+    Модель "Позиции учебного плана"
+    """
+
+    __tablename__ = 'univer_educ_plan_pos'
+
+    id = Column('educ_plan_pos_id', Integer, primary_key=True)
+    educ_plan_id = Column('educ_plan_id', ForeignKey('univer_educ_plan.educ_plan_id'))
+    educ_plan = relationship('EducPlan')
+    subject_id = Column('subject_id', ForeignKey('univer_subject.subject_id'))
+    subject = relationship(Subject)
+    semester = Column('educ_plan_pos_semestr', Integer)
+
+    def __repr__(self):
+        return "<EducPlanPos {}: {} ({} семестр)>".format(self.educ_plan, self.subject, self.semester)
+    
+    def __str__(self):
+        return "{}: {} ({} семестр)".format(self.educ_plan, self.subject, self.semester)
+
+
+class Attendance(Base):
+    """
+    Модель "Журнал посещаемости"
+    """
+
+    __tablename__ = 'univer_attendance'
+
+    date = Column('att_date', Date, primary_Key=True)
+    grade = Column('ball', Column(Float))
+    was = Column(Boolean)
+    student_id = Column(ForeignKey('univer_students.students_id'), primary_key=True)
+    student = relationship(Student)
+    group_id = Column(ForeignKey('univer_group.group_id'), primary_key=True)
+    group = relationship(Group)
+
+    def __repr__(self):
+        return '<Attendance {}: {} балл ({})>'.format(self.student, self.grade, self.date)
+    
+    def __str__(self):
+        return '{}: {} балл ({})'.format(self.student, self.grade, self.date)
+
+
+class Group(Base):
+    """
+    Модель "Группа"
+    """
+
+    __tablename__ = 'univer_group'
+
+    id = Column('group_id', Integer, primary_key=True)
+    educ_plan_pos_id = Column('educ_plan_pos_id', ForeignKey('univer_educ_plan_pos.educ_plan_pos_id'))
+    educ_plan_pos = relationship(EducPlanPos, backref='groups')
+    teacher_id = Column('teacher_id', ForeignKey('univer_teacher.teacher_id'))
+    teacher = relationship(Teacher)
+    year = Column('group_year', Float)
+    semester = Column('group_semestr', Integer)
+    educ_type_id = Column('educ_type_id', ForeignKey('univer_educ_type.educ_type_id'))
+    educ_type = relationship(EducType)
+    lang_division_id = Column('lang_division_id', ForeignKey('univer_lang_division.lang_division_id'))
+    lang_division = relationship(LangDivision)
+
+
+class GroupStudent(Base):
+    """
+    Модель "Студент в группе"
+    """
+
+    __tablename__ = 'univer_group_student'
+
+    id = Column('group_student_id', Integer, primary_key=True)
+    group_id = Column(ForeignKey('univer_group.group_id'))
+    group = relationship(Group, backref='group_students')
+    student_id = Column(ForeignKey('univer_students.students_id'))
+    student = relationship(Student)
