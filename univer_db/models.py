@@ -213,7 +213,7 @@ class Attendance(Base):
     student_id = Column(ForeignKey('univer_students.students_id'), primary_key=True)
     student = relationship(Student)
     group_id = Column(ForeignKey('univer_group.group_id'), primary_key=True)
-    group = relationship(Group)
+    group = relationship('Group')
 
     def __repr__(self):
         return '<Attendance {}: {} балл ({})>'.format(self.student, self.grade, self.date)
