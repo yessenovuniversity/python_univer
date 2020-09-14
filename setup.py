@@ -18,5 +18,9 @@ setuptools.setup(
         "License :: Proprietary",
         "Operating System :: OS Independent",
     ],
+    install_requires = [
+        'sqlalchemy',
+        'pyodbc',
+    ],
     python_requires='>=3.6',
 )
