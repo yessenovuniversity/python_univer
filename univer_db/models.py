@@ -7,6 +7,26 @@ from .orm import get_base
 Base = get_base()
 
 
+class Faculty(Base):
+    """
+    Модель "Факультет"
+    """
+
+    __tablename__ = 'univer_faculty'
+
+    id = Column('faculty_id', Integer, primary_key=True)
+    status = Column(Integer)
+    name_kz = Column('faculty_name_kz', String(200))
+    name_ru = Column('faculty_name_ru', String(200))
+    name_en = Column('faculty_name_en', String(200))
+
+    def __repr__(self):
+        return "<Faculty {}>".format(self)
+    
+    def __str__(self):
+        return self.name_ru
+
+
 class Stage(Base):
     """
     Модель "Уровень"
