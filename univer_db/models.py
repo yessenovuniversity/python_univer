@@ -7,6 +7,26 @@ from .orm import get_base
 Base = get_base()
 
 
+class Stage(Base):
+    """
+    Модель "Уровень"
+    """
+
+    __tablename__ = 'univer_stage'
+
+    id = Column('stage_id', Integer, primary_key=True)
+    status = Column(Integer)
+    name_kz = Column('stage_name_kz', String(200))
+    name_ru = Column('stage_name_ru', String(200))
+    name_en = Column('stage_name_en', String(200))
+
+    def __repr__(self):
+        return "<Stage {}>".format(self)
+    
+    def __str__(self):
+        return self.name_ru
+
+
 class Speciality(Base):
     """
     Модель "Специальность"
@@ -15,11 +35,25 @@ class Speciality(Base):
     __tablename__ = 'univer_speciality'
 
     id = Column('speciality_id', Integer, primary_key=True)
+    status = Column(Integer)
+    faculty_id = Column(ForeignKey('univer_faculty.faculty_id'))
+    faculty = relationship('Faculty')
+    stage_id = Column(ForeignKey('univer_stage.stage_id'))
+    stage = relationship('Stage')
+    name_kz = Column('speciality_name_kz', String(200))
     name_ru = Column('speciality_name_ru', String(200))
+    name_en = Column('speciality_name_en', String(200))
     code = Column('speciality_okpd', String(10))
+    description_kz = Column('speciality_description_kz', String)
+    description_ru = Column('speciality_description_ru', String)
+    description_en = Column('speciality_description_en', String)
+    result_ru = Column(String)
+    result_kz = Column(String)
+    result_en = Column(String)
+    type = Column(Integer)
 
     def __repr__(self):
-        return "<Speciality {} - {}>".format(self.code, self.name_ru)
+        return "<Speciality {}>".format(self)
     
     def __str__(self):
         return "{} - {}".format(self.code, self.name_ru)
