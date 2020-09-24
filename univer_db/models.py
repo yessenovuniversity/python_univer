@@ -226,6 +226,7 @@ class Student(Base):
     faculty = relationship('Faculty')
     speciality_id = Column(ForeignKey('univer_speciality.speciality_id'))
     speciality = relationship('Speciality')
+    educ_plan_adm_year = Column(Integer)
 
     def __repr__(self):
         full_name = ' '.join(filter(None, [self.last_name, self.first_name, self.middle_name]))
