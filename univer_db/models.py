@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, Date
+from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, Date, DateTime
 from sqlalchemy.orm import relationship
 
 from .orm import get_base
@@ -79,6 +79,67 @@ class Speciality(Base):
         return "{} - {}".format(self.code, self.name_ru)
 
 
+class StructureDivision(Base):
+    """
+    Модель "Подразделение"
+    """
+
+    __tablename__ = 'univer_structure_division_1c'
+
+    id = Column('structure_division_id', Integer, primary_key=True)
+    name_kz = Column('structure_division_name_kz', String(500))
+    name_ru = Column('structure_division_name_ru', String(500))
+    name_en = Column('structure_division_name_en', String(500))
+    status = Column(Integer)
+
+    def __repr__(self):
+        return '<StructureDivision {}>'.format(self)
+    
+    def __str__(self):
+        return self.name_ru
+
+
+class Chair(Base):
+    """
+    Модель "Кафедра"
+    """
+
+    __tablename__ = 'univer_chair'
+
+    id = Column('chair_id', Integer, primary_key=True)
+    status = Column(Integer)
+    name_kz = Column('chair_name_kz', String(200))
+    name_ru = Column('chair_name_ru', String(200))
+    name_en = Column('chair_name_en', String(200))
+    structure_division_id = Column(ForeignKey('univer_structure_division_1c.structure_division_id'))
+    structure_division = relationship('StructureDivision')
+
+    def __repr__(self):
+        return '<Chair {}>'.format(self)
+    
+    def __str__(self):
+        return self.name_ru
+
+
+class SpecialityChair(Base):
+    """
+    Модель отношений "Специальность-Кафедра"
+    """
+
+    __tablename__ = 'univer_speciality_chair'
+
+    speciality_id = Column(ForeignKey('univer_speciality.speciality_id'), primary_key=True)
+    speciality = relationship('Speciality')
+    chair_id = Column(ForeignKey('univer_chair.chair_id'), primary_key=True)
+    chair = relationship('Chair')
+
+    def __repr__(self):
+        return '<SpecialityChair {}>'.format(self)
+    
+    def __str__(self):
+        return '{} - {}'.format(self.chair, self.speciality)
+
+
 class Subject(Base):
     """
     Модель "Дисциплина"
@@ -155,11 +216,14 @@ class Student(Base):
     user_id = Column('user_id', ForeignKey('univer_users.user_id'))
     user = relationship('User')
     status = Column('status', Integer)
+    reg_date = Column(DateTime)
     last_name = Column('students_sname', String(100))
     first_name = Column('students_name', String(100))
     middle_name = Column('students_father_name', String(100))
     email = Column('students_email', String(25))
     identify_code = Column('students_identify_code', String(50))
+    speciality_id = Column(ForeignKey('univer_speciality.speciality_id'))
+    speciality = relationship('Speciality')
 
     def __repr__(self):
         full_name = ' '.join(filter(None, [self.last_name, self.first_name, self.middle_name]))
