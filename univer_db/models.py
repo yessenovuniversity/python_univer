@@ -216,7 +216,7 @@ class Student(Base):
     user_id = Column('user_id', ForeignKey('univer_users.user_id'))
     user = relationship('User')
     status = Column('status', Integer)
-    reg_date = Column(DateTime)
+    reg_date = Column('student_reg_date', DateTime)
     last_name = Column('students_sname', String(100))
     first_name = Column('students_name', String(100))
     middle_name = Column('students_father_name', String(100))
