@@ -222,6 +222,8 @@ class Student(Base):
     middle_name = Column('students_father_name', String(100))
     email = Column('students_email', String(25))
     identify_code = Column('students_identify_code', String(50))
+    faculty_id = Column(ForeignKey('univer_faculty.faculty_id'))
+    faculty = relationship('Faculty')
     speciality_id = Column(ForeignKey('univer_speciality.speciality_id'))
     speciality = relationship('Speciality')
 
