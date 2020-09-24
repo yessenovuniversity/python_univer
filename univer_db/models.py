@@ -47,6 +47,26 @@ class Stage(Base):
         return self.name_ru
 
 
+class EducationForm(Base):
+    """
+    Модель "Форма обучения"
+    """
+
+    __tablename__ = 'univer_educational_form'
+
+    id = Column('education_form_id', Integer, primary_key=True)
+    status = Column(Integer)
+    name_kz = Column('education_form_name_kz', String(200))
+    name_ru = Column('education_form_name_ru', String(200))
+    name_en = Column('education_form_name_en', String(200))
+
+    def __repr__(self):
+        return "<EducationForm {}>".format(self)
+
+    def __str__(self):
+        return self.name_ru
+
+
 class Speciality(Base):
     """
     Модель "Специальность"
