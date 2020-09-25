@@ -52,7 +52,7 @@ class EducationForm(Base):
     Модель "Форма обучения"
     """
 
-    __tablename__ = 'univer_educational_form'
+    __tablename__ = 'univer_education_form'
 
     id = Column('education_form_id', Integer, primary_key=True)
     status = Column(Integer)
@@ -247,6 +247,8 @@ class Student(Base):
     speciality_id = Column(ForeignKey('univer_speciality.speciality_id'))
     speciality = relationship('Speciality')
     educ_plan_adm_year = Column(Integer)
+    education_form_id = Column(ForeignKey('univer_education_form.education_form_id'))
+    education_form = relationship('EducationForm')
 
     def __repr__(self):
         full_name = ' '.join(filter(None, [self.last_name, self.first_name, self.middle_name]))
