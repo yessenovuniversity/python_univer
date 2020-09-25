@@ -435,4 +435,4 @@ class Progress(Base):
         return '<Progress {}>'.format(self)
     
     def __str__(self):
-        return '{} - {}'.format(self.student, self.subjecet)
+        return '{} - {}'.format(self.student, self.subject)
