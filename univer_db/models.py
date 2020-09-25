@@ -418,12 +418,12 @@ class Progress(Base):
     subject = relationship('Subject')
 
     # Кредит
-    credit = Column(Integer)
+    credit = Column('progress_credit', Integer)
 
     # Оценки
-    result_rk1 = Column(Integer)
-    result_rk2 = Column(Integer)
-    result = Column(Integer)
+    result_rk1 = Column('progress_result_rk1', Integer)
+    result_rk2 = Column('progress_result_rk2', Integer)
+    result = Column('progress_result', Integer)
 
     # Семестры
     semester = Column('n_seme', Integer)
