@@ -399,6 +399,28 @@ class GroupStudent(Base):
     student = relationship(Student)
 
 
+class ControllType(Base):
+    """
+    Модель "Тип контроля"
+    """
+
+    __tablename__ = 'univer_controll_type'
+
+    # Идентификатор
+    id = Column('controll_type_id', Integer, primary_key=True)
+
+    # Наименование
+    name_kz = Column('controll_type_name_kz', String(100))
+    name_ru = Column('controll_type_name_ru', String(100))
+    name_en = Column('controll_type_name_en', String(100))
+
+    def __repr__(self):
+        return '<ControllType {}>'.format(self)
+    
+    def __str__(self):
+        return self.name_ru
+
+
 class Progress(Base):
     """
     Модель "Прогресс студента"
@@ -430,6 +452,7 @@ class Progress(Base):
 
     # Тип контроля
     controll_type_id = Column(ForeignKey('univer_controll_type.controll_type_id'))
+    controll_type = relationship('ControllType')
 
     def __repr__(self):
         return '<Progress {}>'.format(self)
