@@ -481,6 +481,9 @@ class Progress(Base):
     controll_type_id = Column(ForeignKey('univer_controll_type.controll_type_id'))
     controll_type = relationship('ControllType')
 
+    # Статус
+    status = Column(Integer)
+
     def __repr__(self):
         return '<Progress {}>'.format(self)
     
