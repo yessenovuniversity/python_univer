@@ -397,3 +397,42 @@ class GroupStudent(Base):
     group = relationship(Group, backref='group_students')
     student_id = Column(ForeignKey('univer_students.students_id'))
     student = relationship(Student)
+
+
+class Progress(Base):
+    """
+    Модель "Прогресс студента"
+    """
+
+    __tablename__ = 'univer_progress'
+
+    # Идентификатор
+    id = Column('progress_id', Integer, primary_key=True)
+
+    # Студент
+    student_id = Column(ForeignKey('univer_students.students_id'))
+    student = relationship('Student')
+
+    # Дисциплина
+    subject_id = Column(ForeignKey('univer_subject.subject_id'))
+    subject = relationship('Subject')
+
+    # Кредит
+    credit = Column(Integer)
+
+    # Оценки
+    result_rk1 = Column(Integer)
+    result_rk2 = Column(Integer)
+    result = Column(Integer)
+
+    # Семестры
+    semester = Column('n_seme', Integer)
+
+    # Тип контроля
+    controll_type_id = Column(ForeignKey('univer_controll_type.controll_type_id'))
+
+    def __repr__(self):
+        return '<Progress {}>'.format(self)
+    
+    def __str__(self):
+        return '{} - {}'.format(self.student, self.subjecet)
