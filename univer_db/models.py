@@ -421,6 +421,29 @@ class ControllType(Base):
         return self.name_ru
 
 
+class MarkType(Base):
+    """
+    Модель "Тип оценки"
+    """
+
+    __tablename__ = 'univer_mark_type'
+
+    # Идентификатор
+    id = Column('mark_type_id', Integer, primary_key=True)
+
+    # Символ оценки
+    symbol = Column('mark_type_symbol', String(10))
+
+    # GPA
+    gpa = Column('mark_type_gpa', Float)
+
+    def __repr__(self):
+        return '<MarkType {}>'.format(self)
+
+    def __str__(self):
+        return '{} ({})'.format(self.symbol, self.gpa)
+
+
 class Progress(Base):
     """
     Модель "Прогресс студента"
@@ -438,6 +461,10 @@ class Progress(Base):
     # Дисциплина
     subject_id = Column(ForeignKey('univer_subject.subject_id'))
     subject = relationship('Subject')
+
+    # Тип оценки
+    mark_type_id = Column(ForeignKey('univer_mark_type.mark_type_id'))
+    mark_type = relationship('MarkType')
 
     # Кредит
     credit = Column('progress_credit', Integer)
