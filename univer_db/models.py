@@ -119,6 +119,27 @@ class StructureDivision(Base):
         return self.name_ru
 
 
+class PersonnelStructureDivisionLink(Base):
+    """
+    Модель "Ссылка персонала с подразделением"
+    """
+
+    __tablename__ = 'univer_personal_struct_pos_link_1c'
+
+    id = Column('pers_struct_pos_link_id', Integer, primary_key=True)
+    status = Column(Integer)
+    personnel_id = Column('personal_id', ForeignKey('univer_personal.personal_id'))
+    personnel = relationship('Personnel')
+    structure_division_id = Column(ForeignKey('univer_structure_division_1c.structure_division_id'))
+    structure_division = relationship('StructureDivision')
+
+    def __repr__(self):
+        return '<PersonnelStructureDivisionLink {}>'.format(self)
+    
+    def __str__(self):
+        return '{} ({})'.format(personnel, structure_division)
+
+
 class Chair(Base):
     """
     Модель "Кафедра"
