@@ -258,23 +258,37 @@ class Student(Base):
     user = relationship('User')
     status = Column('status', Integer)
     reg_date = Column('student_reg_date', DateTime)
+
+    # ФИО студента
     last_name = Column('students_sname', String(100))
     first_name = Column('students_name', String(100))
     middle_name = Column('students_father_name', String(100))
+
+    # Фамилия и Имя студента транслитом
+    last_name_translit = Column('students_sname_intern', String(100))
+    first_name_translit = Column('students_name_intern', String(100))
+
     email = Column('students_email', String(25))
+
+    # ИИН студента
     identify_code = Column('students_identify_code', String(50))
+
+    # Факультет
     faculty_id = Column(ForeignKey('univer_faculty.faculty_id'))
     faculty = relationship('Faculty')
+
+    # ОП
     speciality_id = Column(ForeignKey('univer_speciality.speciality_id'))
     speciality = relationship('Speciality')
+
+    # Год начала действия учебного плана
     educ_plan_adm_year = Column(Integer)
+
     education_form_id = Column(ForeignKey('univer_education_form.education_form_id'))
     education_form = relationship('EducationForm')
 
     def __repr__(self):
-        full_name = ' '.join(filter(None, [self.last_name, self.first_name, self.middle_name]))
-
-        return '<Student {}>'.format(full_name)
+        return '<Student {}>'.format(self)
     
     def __str__(self):
         return ' '.join(filter(None, [self.last_name, self.first_name, self.middle_name]))
@@ -290,9 +304,16 @@ class Personnel(Base):
     user_id = Column('user_id', ForeignKey('univer_users.user_id'))
     user = relationship('User')
     status = Column('status', Integer)
+
+    # ФИО персонала
     last_name = Column('personal_sname', String(200))
     first_name = Column('personal_name', String(100))
     middle_name = Column('personal_father_name', String(100))
+
+    # Фамилия и Имя персонала транслитом
+    last_name_translit = Column('personal_translit_sname', String(100))
+    first_name_translit = Column('personal_translit_name', String(100))
+
     work_email = Column('personal_work_email', String(50))
     identify_code = Column('personal_identification_number', String(150))
 
