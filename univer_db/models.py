@@ -429,7 +429,7 @@ class Group(Base):
     def __repr__(self):
         return '<Group {}>'.format(self)
     
-    def __self__(self):
+    def __str__(self):
         return '{} ({} год)'.format(self.educ_plan_pos.educ_plan.speciality, self.educ_plan_pos.educ_plan.year)
 
 
