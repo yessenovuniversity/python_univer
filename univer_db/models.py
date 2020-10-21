@@ -540,3 +540,24 @@ class Progress(Base):
     
     def __str__(self):
         return '{} - {}'.format(self.student, self.subject)
+
+
+class Sheet(Base):
+    """
+    Модель "Ведомость"
+    """
+
+    __tablename__ = 'univer_sheet'
+
+    # Идентификатор
+    id = Column('sheet_id', Integer, primary_key=True)
+
+    # Группа
+    group_id = Column(ForeignKey('univer_group.group_id'))
+    group = relationship('Group')
+
+    def __repr__(self):
+        return '<Sheet {}>'.format(self)
+    
+    def __str__(self):
+        return str(self.id)
