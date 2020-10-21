@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: Proprietary",
+        "License :: Other/Proprietary License",
         "Operating System :: OS Independent",
     ],
     install_requires = [

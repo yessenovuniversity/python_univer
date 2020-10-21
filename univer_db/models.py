@@ -496,6 +496,9 @@ class Progress(Base):
     # Идентификатор
     id = Column('progress_id', Integer, primary_key=True)
 
+    # Академический год
+    academ_year = Column(Integer)
+
     # Студент
     student_id = Column(ForeignKey('univer_students.students_id'))
     student = relationship('Student')
