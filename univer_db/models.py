@@ -426,6 +426,12 @@ class Group(Base):
     lang_division_id = Column('lang_division_id', ForeignKey('univer_lang_division.lang_division_id'))
     lang_division = relationship(LangDivision)
 
+    def __repr__(self):
+        return '<Group {}>'.format(self)
+    
+    def __str__(self):
+        return '{} ({} год)'.format(self.educ_plan_pos.educ_plan.speciality, self.educ_plan_pos.educ_plan.year)
+
 
 class GroupStudent(Base):
     """
