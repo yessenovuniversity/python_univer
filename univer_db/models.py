@@ -561,3 +561,34 @@ class Sheet(Base):
     
     def __str__(self):
         return str(self.id)
+
+
+class SheetResult(Base):
+    """
+    Модель "Результаты ведомости"
+    """
+
+    __tablename__ = 'univer_sheet_result'
+
+    sheet_id = Column(ForeignKey('univer_sheet.sheet_id'), primary_key=True)
+    sheet = relationship('Sheet')
+    subject_id = Column(ForeignKey('univer_subject.subject_id'), primary_key=True)
+    subject = relationship('Subject')
+    teacher_id = Column(ForeignKey('univer_teacher.teacher_id'), primary_key=True)
+    teacher = relationship('Teacher')
+    academ_year = Column(Integer)
+    semester = Column('semestr', Integer)
+    student_id = relationship('univer_students.students_id', primary_key=True)
+    student = relationship('Student')
+    result = Column(Float)
+    date_keep = Column(DateTime, primary_key=True)
+    P_P = Column(Integer)
+    n_seme = Column(Integer)
+    mark_sheet_result = Column(Integer)
+    retake_type = Column(Integer)
+
+    def __repr__(self):
+        return '<SheetResult {} (sheet_id={})>'.format(self, self.sheet_id)
+    
+    def __str__(self):
+        return str(self.sheet_id)
