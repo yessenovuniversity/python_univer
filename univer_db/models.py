@@ -355,6 +355,8 @@ class EducPlan(Base):
     id = Column('educ_plan_id', Integer, primary_key=True)
     speciality_id = Column('speciality_id', ForeignKey('univer_speciality.speciality_id'))
     speciality = relationship(Speciality)
+    education_form_id = Column(ForeignKey('univer_education_form.education_form_id'))
+    education_form = Column('EducationForm')
     year = Column('educ_plan_adm_year', Integer)
 
     def __repr__(self):
