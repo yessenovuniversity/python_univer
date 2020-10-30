@@ -345,6 +345,31 @@ class Teacher(Base):
         return str(self.personnel)
 
 
+class AcademCalendar(Base):
+    """
+    Модель "Академический календарь"
+    """
+
+    __tablename__ = 'univer_academ_calendar_pos'
+
+    id = Column('acpos_id', Integer, primary_key=True)
+    educ_plan_id = Column(ForeignKey('univer_educ_plan.educ_plan_id'))
+    educ_plan = relationship('EducPlan')
+    acpos_semester = Column(Integer)
+    acpos_module = Column(Integer)
+    control_id = Column(ForeignKey('univer_control.control_id'))
+    control = relationship('Control')
+    acpos_weeks = Column(Integer)
+    acpos_date_start = Column(DateTime)
+    acpos_date_end = Column(DateTime)
+
+    def __repr__(self):
+        return '<AcademCalendar {}>'.format(self)
+    
+    def __str__(self):
+        return '{}'.format(self.id)
+
+
 class EducPlan(Base):
     """
     Модель "Учебный план"
@@ -356,7 +381,7 @@ class EducPlan(Base):
     speciality_id = Column('speciality_id', ForeignKey('univer_speciality.speciality_id'))
     speciality = relationship(Speciality)
     education_form_id = Column(ForeignKey('univer_education_form.education_form_id'))
-    education_form = Column('EducationForm')
+    education_form = relationship('EducationForm')
     year = Column('educ_plan_adm_year', Integer)
 
     def __repr__(self):
@@ -447,6 +472,23 @@ class GroupStudent(Base):
     group = relationship(Group, backref='group_students')
     student_id = Column(ForeignKey('univer_students.students_id'))
     student = relationship(Student)
+
+
+class Control(Base):
+    """
+    Модель "Контроль"
+    """
+
+    __tablename__ = 'univer_control'
+
+    id = Column('control_id', Integer, primary_key=True)
+    name_ru = Column('control_name_ru', String(100))
+
+    def __repr__(self):
+        return '<Control {} (id={})>'.format(self, self.id)
+    
+    def __str__(self):
+        return self.name_ru
 
 
 class ControllType(Base):
