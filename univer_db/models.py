@@ -345,6 +345,31 @@ class Teacher(Base):
         return str(self.personnel)
 
 
+class AcademCalendar(Base):
+    """
+    Модель "Академический календарь"
+    """
+
+    __tablename__ = 'univer_academ_calendar_pos'
+
+    id = Column('acpos_id', Integer, primary_key=True)
+    educ_plan_id = Column(ForeignKey('univer_educ_plan.educ_plan_id'))
+    educ_plan = relationship('EducPlan')
+    acpos_semester = Column(Integer)
+    acpos_module = Column(Integer)
+    control_id = Column(ForeignKey('univer_control.control_id'))
+    control = relationship('Control')
+    acpos_weeks = Column(Integer)
+    acpos_date_start = Column(DateTime)
+    acpos_date_end = Column(DateTime)
+
+    def __repr__(self):
+        return '<AcademCalendar {}>'.format(self)
+    
+    def __str__(self):
+        return '{}'.format(self.id)
+
+
 class EducPlan(Base):
     """
     Модель "Учебный план"
@@ -355,6 +380,8 @@ class EducPlan(Base):
     id = Column('educ_plan_id', Integer, primary_key=True)
     speciality_id = Column('speciality_id', ForeignKey('univer_speciality.speciality_id'))
     speciality = relationship(Speciality)
+    education_form_id = Column(ForeignKey('univer_education_form.education_form_id'))
+    education_form = relationship('EducationForm')
     year = Column('educ_plan_adm_year', Integer)
 
     def __repr__(self):
@@ -447,6 +474,27 @@ class GroupStudent(Base):
     student = relationship(Student)
 
 
+class Controll(Base):
+    """
+    Модель "Контроль"
+    """
+
+    __tablename__ = 'univer_control'
+
+    # Идентификатор
+    id = Column('control_id', Integer, primary_key=True)
+
+    # Наименование
+    name_ru = Column('control_name_ru', String(100))
+    
+
+    def __repr__(self):
+        return '<Control {} (id={})>'.format(self, self.id)
+    
+    def __str__(self):
+        return self.name_ru
+
+
 class ControllType(Base):
     """
     Модель "Тип контроля"
@@ -467,6 +515,33 @@ class ControllType(Base):
     
     def __str__(self):
         return self.name_ru
+
+
+class ControllTypeControllLink(Base):
+    """
+    Модель "Связь между Controll и ControllType
+    Статус: Выполняется
+    """
+
+    __tablename__ = 'univer_controll_type_control_link'
+
+    # Тип контроля
+    controll_type_id = Column(ForeignKey('univer_controll_type.controll_type_id'), primary_key=True)
+    controll_type = relationship('ControllType')
+
+    # Контроль
+    controll_id = Column(ForeignKey('univer_control.control_id'), primary_key=True)
+    controll = relationship('Controll')
+
+    # Тип ведомости
+    sheet_type_id = Column(ForeignKey('univer_sheet_type.sheet_type_id'), primary_key=True)
+    sheet_type = relationship('SheetType')
+
+    def __repr__(self):
+        return '<ControllTypeControllLink {} (controll_type_id={} controll_id={} sheet_type_id={}>'.format(self, self.controll_type_id, self.controll_id, self.sheet_type_id)
+    
+    def __str__(self):
+        return '{}-{}'.format(self.controll_type, self.controll)
 
 
 class MarkType(Base):
@@ -552,6 +627,10 @@ class Sheet(Base):
     # Идентификатор
     id = Column('sheet_id', Integer, primary_key=True)
 
+    # Тип ведомости
+    sheet_type_id = Column(ForeignKey('univer_sheet_type.sheet_type_id'))
+    sheet_type = relationship('SheetType')
+
     # Группа
     group_id = Column(ForeignKey('univer_group.group_id'))
     group = relationship('Group')
@@ -561,3 +640,58 @@ class Sheet(Base):
     
     def __str__(self):
         return str(self.id)
+
+
+class SheetType(Base):
+    """
+    Модель "Тип ведомости"
+    """
+
+    __tablename__ = 'univer_sheet_type'
+
+    # Идентификатор
+    id = Column('sheet_type_id', Integer, primary_key=True)
+
+    # Наименование
+    name_ru = Column('sheet_type_name_ru', String(200))
+
+    # Статус
+    status = Column(Integer)
+
+    def __repr__(self):
+        return '<SheetType {} (id={} status={})>'.format(self, self.id, self.status)
+    
+    def __str__(self):
+        return self.name_ru
+
+
+class SheetResult(Base):
+    """
+    Модель "Результаты ведомости"
+    """
+
+    __tablename__ = 'univer_sheet_result'
+
+    sheet_id = Column(ForeignKey('univer_sheet.sheet_id'), primary_key=True)
+    sheet = relationship('Sheet')
+    subject_id = Column(ForeignKey('univer_subject.subject_id'))
+    subject = relationship('Subject')
+    teacher_id = Column(ForeignKey('univer_teacher.teacher_id'))
+    teacher = relationship('Teacher')
+    academ_year = Column(Integer)
+    semester = Column('semestr', Integer)
+    control = Column(Integer, primary_key=True)
+    student_id = Column(ForeignKey('univer_students.students_id'), primary_key=True)
+    student = relationship('Student')
+    result = Column(Float)
+    date_keep = Column(DateTime)
+    P_P = Column(Integer)
+    n_seme = Column(Integer)
+    mark_sheet_result = Column(Integer)
+    retake_type = Column(Integer)
+
+    def __repr__(self):
+        return '<SheetResult {} (sheet_id={})>'.format(self, self.sheet_id)
+    
+    def __str__(self):
+        return str(self.sheet_id)
