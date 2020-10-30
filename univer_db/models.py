@@ -394,15 +394,27 @@ class EducPlan(Base):
 class EducPlanPos(Base):
     """
     Модель "Позиции учебного плана"
+    Статус: Выполняется
     """
 
     __tablename__ = 'univer_educ_plan_pos'
 
+    # Идентификатор
     id = Column('educ_plan_pos_id', Integer, primary_key=True)
+
+    # Учебный план
     educ_plan_id = Column('educ_plan_id', ForeignKey('univer_educ_plan.educ_plan_id'))
     educ_plan = relationship('EducPlan')
+
+    # Дисциплина
     subject_id = Column('subject_id', ForeignKey('univer_subject.subject_id'))
     subject = relationship(Subject)
+
+    # Тип контроля
+    controll_type_id = Column(Foreignkey('univer_controll_type.controll_type_id'))
+    controll_type = relationship('ControllType')
+
+    # Семестр
     semester = Column('educ_plan_pos_semestr', Integer)
 
     def __repr__(self):
