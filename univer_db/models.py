@@ -411,7 +411,7 @@ class EducPlanPos(Base):
     subject = relationship(Subject)
 
     # Тип контроля
-    controll_type_id = Column(Foreignkey('univer_controll_type.controll_type_id'))
+    controll_type_id = Column(ForeignKey('univer_controll_type.controll_type_id'))
     controll_type = relationship('ControllType')
 
     # Семестр
