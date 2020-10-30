@@ -357,7 +357,7 @@ class AcademCalendar(Base):
     educ_plan = relationship('EducPlan')
     acpos_semester = Column(Integer)
     acpos_module = Column(Integer)
-    controll_id = Column(ForeignKey('univer_control.control_id'))
+    controll_id = Column('control_id', ForeignKey('univer_control.control_id'))
     controll = relationship('Controll')
     acpos_weeks = Column(Integer)
     acpos_date_start = Column(DateTime)
@@ -542,7 +542,7 @@ class ControllTypeControllLink(Base):
     controll_type = relationship('ControllType')
 
     # Контроль
-    controll_id = Column(ForeignKey('univer_control.control_id'), primary_key=True)
+    controll_id = Column('control_id', ForeignKey('univer_control.control_id'), primary_key=True)
     controll = relationship('Controll')
 
     # Тип ведомости
