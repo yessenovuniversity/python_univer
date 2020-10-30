@@ -357,8 +357,8 @@ class AcademCalendar(Base):
     educ_plan = relationship('EducPlan')
     acpos_semester = Column(Integer)
     acpos_module = Column(Integer)
-    control_id = Column(ForeignKey('univer_control.control_id'))
-    control = relationship('Control')
+    controll_id = Column(ForeignKey('univer_control.control_id'))
+    controll = relationship('Controll')
     acpos_weeks = Column(Integer)
     acpos_date_start = Column(DateTime)
     acpos_date_end = Column(DateTime)
@@ -489,7 +489,7 @@ class Controll(Base):
     
 
     def __repr__(self):
-        return '<Control {} (id={})>'.format(self, self.id)
+        return '<Controll {} (id={})>'.format(self, self.id)
     
     def __str__(self):
         return self.name_ru
