@@ -449,6 +449,7 @@ class Attendance(Base):
 class Group(Base):
     """
     Модель "Группа"
+    Статус: Выполняется
     """
 
     __tablename__ = 'univer_group'
@@ -465,8 +466,11 @@ class Group(Base):
     lang_division_id = Column('lang_division_id', ForeignKey('univer_lang_division.lang_division_id'))
     lang_division = relationship(LangDivision)
 
+    # Семестр повторного обучения
+    retake_semester = Column('group_retake_semestr', Integer)
+
     def __repr__(self):
-        return '<Group {}>'.format(self)
+        return '<Group {} (id={} educ_plan_pos_id={} teacher_id={})>'.format(self, self.id, self.educ_plan_pos_id, self.teacher_id)
     
     def __str__(self):
         return '{} ({} год)'.format(self.educ_plan_pos.educ_plan.speciality, self.educ_plan_pos.educ_plan.year)
