@@ -293,7 +293,7 @@ class GraduateInfo(Base):
     Статус: Выполняется
     """
 
-    __tablename__ = 'univer_graduate'
+    __tablename__ = 'univer_graduate_info'
 
     id = Column('graduate_info_id', Integer, primary_key=True)
     date = Column('graduate_info_date', DateTime)
@@ -350,7 +350,7 @@ class Student(Base):
     identify_code = Column('students_identify_code', String(50))
 
     # Данные об окончании учебного заведения перед поступлением в университет
-    graduate_info_id = Column(ForeignKey('univer_graduate.graduate_info_id'))
+    graduate_info_id = Column(ForeignKey('univer_graduate_info.graduate_info_id'))
     graduate_info = relationship('GraduateInfo')
 
     # Факультет
