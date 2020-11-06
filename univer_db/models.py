@@ -276,6 +276,11 @@ class Student(Base):
 
     email = Column('students_email', String(25))
 
+    # Документ
+    document_identity_number = Column('students_document_identity_number', String(50))
+    document_identity_date = Column('students_document_identity_date', DateTime)
+    document_identity_issued = Column('students_document_identity_issued', String(100))
+
     # ИИН студента
     identify_code = Column('students_identify_code', String(50))
 
