@@ -262,6 +262,9 @@ class Student(Base):
     # Пол
     sex = Column('students_sex', Integer)
 
+    # Дата рождения
+    birth_date = Column('students_birth_date', DateTime)
+
     # ФИО студента
     last_name = Column('students_sname', String(100))
     first_name = Column('students_name', String(100))
