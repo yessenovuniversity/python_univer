@@ -259,6 +259,9 @@ class Student(Base):
     status = Column('status', Integer)
     reg_date = Column('student_reg_date', DateTime)
 
+    # Пол
+    sex = Column('students_sex', Integer)
+
     # ФИО студента
     last_name = Column('students_sname', String(100))
     first_name = Column('students_name', String(100))
