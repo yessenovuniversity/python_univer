@@ -247,6 +247,26 @@ class User(Base):
         return self.username
 
 
+class DocumentIdentity(Base):
+    """
+    Модель "Тип документа"
+    Статус: Выполнено
+    """
+
+    __tablename__ = 'univer_document_identity'
+
+    id = Column('document_identity_type', Integer, primary_key=True)
+    name_ru = Column('document_name_ru', String(100))
+    name_kz = Column('document_name_kz', String(100))
+    name_en = Column('document_name_en', String(100))
+
+    def __repr__(self):
+        return '<DocumentIdentity {} (id={})'.format(self, self.id)
+    
+    def __str__(self):
+        return self.name_ru
+
+
 class Student(Base):
     """
     Модель "Студент"
@@ -277,6 +297,8 @@ class Student(Base):
     email = Column('students_email', String(25))
 
     # Документ
+    document_identity_type_id = Column('students_document_identity_type', ForeignKey('univer_document_identity.document_identity_type'))
+    document_identity_type = relationship('DocumentIdentity')
     document_identity_number = Column('students_document_identity_number', String(50))
     document_identity_date = Column('students_document_identity_date', DateTime)
     document_identity_issued = Column('students_document_identity_issued', String(100))
