@@ -267,6 +267,49 @@ class DocumentIdentity(Base):
         return self.name_ru
 
 
+class Institution(Base):
+    """
+    Модель "Учебное заведение"
+    Статус: Выполняется
+    """
+
+    __tablename__ = 'univer_edu_institutions'
+
+    id = Column('edu_institution_id', Integer, primary_key=True)
+    name_kz = Column('edu_institution_name_kz', String)
+    name_ru = Column('edu_institution_name_ru', String)
+    name_en = Column('edu_institution_name_en', String)
+
+    def __repr__(self):
+        return '<Institution {} (id={})>'.format(self, self.id)
+    
+    def __str__(self):
+        return self.name_ru
+
+
+class GraduateInfo(Base):
+    """
+    Данные об окончании учебного заведения перед поступлением в университет
+    Статус: Выполняется
+    """
+
+    __tablename__ = 'univer_graduate'
+
+    id = Column('graduate_info_id', Integer, primary_key=True)
+    date = Column('graduate_info_date', DateTime)
+    institution_name = Column('graduate_info_institution_name', String)
+    series = Column('graduate_info_series', String)
+    number = Column('graduate_info_number', String)
+    institution_id = Column('edu_institution_id', ForeignKey('univer_edu_institutions.edu_institution_id'))
+    institution = relationship('Institution')
+
+    def __repr__(self):
+        return '<Graduate {} (id={})>'.format(self, self.id)
+    
+    def __str__(self):
+        return '{} {}'.format(self.series, self.number)
+
+
 class Student(Base):
     """
     Модель "Студент"
@@ -305,6 +348,10 @@ class Student(Base):
 
     # ИИН студента
     identify_code = Column('students_identify_code', String(50))
+
+    # Данные об окончании учебного заведения перед поступлением в университет
+    graduate_info_id = Column(ForeignKey('univer_graduate.graduate_info_id'))
+    graduate_info = relationship('GraduateInfo')
 
     # Факультет
     faculty_id = Column(ForeignKey('univer_faculty.faculty_id'))
