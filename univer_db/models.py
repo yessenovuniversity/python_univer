@@ -287,6 +287,26 @@ class Institution(Base):
         return self.name_ru
 
 
+class GraduateDocType(Base):
+    """
+    Тип документа об окончании учебного заведения перед поступлением в университет
+    Статус: Выполняется
+    """
+
+    __tablename__ = 'univer_graduate_doctypes'
+
+    id = Column('graduate_doctype_id', Integer, primary_key=True)
+    name_ru = Column('graduate_doctype_name_ru', String)
+    name_kz = Column('graduate_doctype_name_kz', String)
+    name_en = Column('graduate_doctype_name_en', String)
+
+    def __repr__(self):
+        return '<GraduateDocType {} (id={})>'.format(self, self.id)
+    
+    def __str__(self):
+        return self.name_ru
+
+
 class GraduateInfo(Base):
     """
     Данные об окончании учебного заведения перед поступлением в университет
@@ -300,6 +320,8 @@ class GraduateInfo(Base):
     institution_name = Column('graduate_info_institution_name', String)
     series = Column('graduate_info_series', String)
     number = Column('graduate_info_number', String)
+    graduate_doctype_id = Column(ForeignKey('univer_graduate_doctypes.graduate_doctype_id'))
+    graduate_doctype = relationship('GraduateDocType')
     institution_id = Column('edu_institution_id', ForeignKey('univer_edu_institutions.edu_institution_id'))
     institution = relationship('Institution')
 
