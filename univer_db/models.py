@@ -67,6 +67,32 @@ class EducationForm(Base):
         return self.name_ru
 
 
+class EduLevel(Base):
+    """
+    Модель "Уровень обучения"
+    Статус: Выполняется
+    """
+
+    __tablename__ = 'univer_edu_levels'
+
+    # Идентификатор
+    id = Column('edu_level_id', Integer, primary_Key=True)
+
+    # Наименование
+    name_ru = Column('edu_level_name_ru', String(100))
+    name_kz = Column('edu_level_name_kz', String(100))
+    name_en = Column('edu_level_name_en', String(100))
+
+    # Статус
+    status = Column(Integer)
+
+    def __repr__(self):
+        return '<EduLevel {} (id={} status={})'.format(self, self.id, self.status)
+    
+    def __str__(self):
+        return self.name_ru
+
+
 class Speciality(Base):
     """
     Модель "Специальность"
@@ -137,7 +163,7 @@ class PersonnelStructureDivisionLink(Base):
         return '<PersonnelStructureDivisionLink {}>'.format(self)
     
     def __str__(self):
-        return '{} ({})'.format(personnel, structure_division)
+        return '{} ({})'.format(self.personnel, self.structure_division)
 
 
 class Chair(Base):
@@ -343,7 +369,7 @@ class Contract(Base):
     id = Column('contract_id', Integer, primary_key=True)
     number = Column('contract_number', String)
     date_received = Column('contract_date_recieved', DateTime)
-    student_id = Column(ForeignKey('univer_students.students_id'))
+    student_id = Column('students_id', ForeignKey('univer_students.students_id'))
     student = relationship('Student')
 
     def __repr__(self):
@@ -356,6 +382,7 @@ class Contract(Base):
 class Student(Base):
     """
     Модель "Студент"
+    Статус: Выполняется
     """
     __tablename__ = 'univer_students'
 
@@ -364,6 +391,18 @@ class Student(Base):
     user = relationship('User')
     status = Column('status', Integer)
     reg_date = Column('student_reg_date', DateTime)
+
+    # Ступень обучения
+    stage_id = Column(ForeignKey('univer_stage.stage_id'))
+    stage = relationship('Stage')
+
+    # Уровень обучения
+    edu_level_id = Column('edu_levels_id', ForeignKey('univer_edu_levels.edu_level_id'))
+    edu_level = relationship('EduLevel')
+
+    # Форма обучения
+    education_form_id = Column(ForeignKey('univer_education_form.education_form_id'))
+    education_form = relationship('EducationForm')
 
     # Пол
     sex = Column('students_sex', Integer)
