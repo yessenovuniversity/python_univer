@@ -332,6 +332,27 @@ class GraduateInfo(Base):
         return '{} {}'.format(self.series, self.number)
 
 
+class Contract(Base):
+    """
+    Модель "Договор студента"
+    Статус: Выполняется
+    """
+
+    __tablename__ = 'univer_contract'
+
+    id = Column('contract_id', Integer, primary_key=True)
+    number = Column('contract_number', String)
+    date_received = Column('contract_date_recieved', DateTime)
+    student_id = Column(ForeignKey('univer_students.students_id'))
+    student = relationship('Student')
+
+    def __repr__(self):
+        return '<Contract {} (id={})>'.format(self, self.id)
+    
+    def __str__(self):
+        '{} ({})'.format(student, number)
+
+
 class Student(Base):
     """
     Модель "Студент"
