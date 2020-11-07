@@ -350,7 +350,7 @@ class Contract(Base):
         return '<Contract {} (id={})>'.format(self, self.id)
     
     def __str__(self):
-        '{} ({})'.format(student, number)
+        '{} ({})'.format(self.student, self.number)
 
 
 class Student(Base):
