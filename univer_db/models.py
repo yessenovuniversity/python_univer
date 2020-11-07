@@ -76,7 +76,7 @@ class EduLevel(Base):
     __tablename__ = 'univer_edu_levels'
 
     # Идентификатор
-    id = Column('edu_level_id', Integer, primary_Key=True)
+    id = Column('edu_level_id', Integer, primary_key=True)
 
     # Наименование
     name_ru = Column('edu_level_name_ru', String(100))
