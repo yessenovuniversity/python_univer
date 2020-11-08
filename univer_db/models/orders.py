@@ -50,6 +50,7 @@ class Order(Base):
     def __repr__(self):
         return '<Order {} (id={} status={} order_type={} stage={} education_form={} payment_form={} edu_level={}'.format(
             self,
+            self.id,
             self.status,
             self.order_type_id,
             self.stage_id,
