@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, Date, DateTime
 from sqlalchemy.orm import relationship
 
-from .orm import get_base
+from univer_db.orm import get_base
 
 
 Base = get_base()
@@ -22,72 +22,6 @@ class Faculty(Base):
 
     def __repr__(self):
         return "<Faculty {}>".format(self)
-    
-    def __str__(self):
-        return self.name_ru
-
-
-class Stage(Base):
-    """
-    Модель "Уровень"
-    """
-
-    __tablename__ = 'univer_stage'
-
-    id = Column('stage_id', Integer, primary_key=True)
-    status = Column(Integer)
-    name_kz = Column('stage_name_kz', String(200))
-    name_ru = Column('stage_name_ru', String(200))
-    name_en = Column('stage_name_en', String(200))
-
-    def __repr__(self):
-        return "<Stage {}>".format(self)
-    
-    def __str__(self):
-        return self.name_ru
-
-
-class EducationForm(Base):
-    """
-    Модель "Форма обучения"
-    """
-
-    __tablename__ = 'univer_education_form'
-
-    id = Column('education_form_id', Integer, primary_key=True)
-    status = Column(Integer)
-    name_kz = Column('education_form_name_kz', String(200))
-    name_ru = Column('education_form_name_ru', String(200))
-    name_en = Column('education_form_name_en', String(200))
-
-    def __repr__(self):
-        return "<EducationForm {}>".format(self)
-
-    def __str__(self):
-        return self.name_ru
-
-
-class EduLevel(Base):
-    """
-    Модель "Уровень обучения"
-    Статус: Выполняется
-    """
-
-    __tablename__ = 'univer_edu_levels'
-
-    # Идентификатор
-    id = Column('edu_level_id', Integer, primary_key=True)
-
-    # Наименование
-    name_ru = Column('edu_level_name_ru', String(100))
-    name_kz = Column('edu_level_name_kz', String(100))
-    name_en = Column('edu_level_name_en', String(100))
-
-    # Статус
-    status = Column(Integer)
-
-    def __repr__(self):
-        return '<EduLevel {} (id={} status={})'.format(self, self.id, self.status)
     
     def __str__(self):
         return self.name_ru
@@ -283,22 +217,6 @@ class LangDivision(Base):
         return self.name_ru
 
 
-class User(Base):
-    """
-    Модель "Пользователь"
-    """
-    __tablename__ = 'univer_users'
-
-    id = Column('user_id', Integer, primary_key=True)
-    username = Column('user_login', String(50))
-
-    def __repr__(self):
-        return '<User {}>'.format(self.username)
-    
-    def __str__(self):
-        return self.username
-
-
 class DocumentIdentity(Base):
     """
     Модель "Тип документа"
@@ -405,138 +323,6 @@ class Contract(Base):
         '{} ({})'.format(self.student, self.number)
 
 
-class Student(Base):
-    """
-    Модель "Студент"
-    Статус: Выполняется
-    """
-    __tablename__ = 'univer_students'
-
-    id = Column('students_id', Integer, primary_key=True)
-    user_id = Column('user_id', ForeignKey('univer_users.user_id'))
-    user = relationship('User')
-    status = Column('status', Integer)
-    reg_date = Column('student_reg_date', DateTime)
-
-    # Ступень обучения
-    stage_id = Column(ForeignKey('univer_stage.stage_id'))
-    stage = relationship('Stage')
-
-    # Уровень обучения
-    edu_level_id = Column('edu_levels_id', ForeignKey('univer_edu_levels.edu_level_id'))
-    edu_level = relationship('EduLevel')
-
-    # Форма обучения
-    education_form_id = Column(ForeignKey('univer_education_form.education_form_id'))
-    education_form = relationship('EducationForm')
-
-    # Тип поступления
-    enrollment_type_id = Column(ForeignKey('univer_enrollment_type.enrollment_type_id'))
-    enrollment_type = relationship('EnrollmentType')
-
-    # Пол
-    sex = Column('students_sex', Integer)
-
-    # Дата рождения
-    birth_date = Column('students_birth_date', DateTime)
-
-    # ФИО студента
-    last_name = Column('students_sname', String(100))
-    first_name = Column('students_name', String(100))
-    middle_name = Column('students_father_name', String(100))
-
-    # Фамилия и Имя студента транслитом
-    last_name_translit = Column('students_sname_intern', String(100))
-    first_name_translit = Column('students_name_intern', String(100))
-
-    email = Column('students_email', String(25))
-
-    # Документ
-    document_identity_type_id = Column('students_document_identity_type', ForeignKey('univer_document_identity.document_identity_type'))
-    document_identity_type = relationship('DocumentIdentity')
-    document_identity_number = Column('students_document_identity_number', String(50))
-    document_identity_date = Column('students_document_identity_date', DateTime)
-    document_identity_issued = Column('students_document_identity_issued', String(100))
-
-    # ИИН студента
-    identify_code = Column('students_identify_code', String(50))
-
-    # Данные об окончании учебного заведения перед поступлением в университет
-    graduate_info_id = Column(ForeignKey('univer_graduate_info.graduate_info_id'))
-    graduate_info = relationship('GraduateInfo')
-
-    # Факультет
-    faculty_id = Column(ForeignKey('univer_faculty.faculty_id'))
-    faculty = relationship('Faculty')
-
-    # ОП
-    speciality_id = Column(ForeignKey('univer_speciality.speciality_id'))
-    speciality = relationship('Speciality')
-
-    # Год начала действия учебного плана
-    educ_plan_adm_year = Column(Integer)
-
-    education_form_id = Column(ForeignKey('univer_education_form.education_form_id'))
-    education_form = relationship('EducationForm')
-
-    def __repr__(self):
-        return '<Student {}>'.format(self)
-    
-    def __str__(self):
-        return ' '.join(filter(None, [self.last_name, self.first_name, self.middle_name]))
-
-
-class Personnel(Base):
-    """
-    Модель "Сотрудник"
-    """
-    __tablename__ = 'univer_personal'
-
-    id = Column('personal_id', Integer, primary_key=True)
-    user_id = Column('user_id', ForeignKey('univer_users.user_id'))
-    user = relationship('User')
-    status = Column('status', Integer)
-
-    # ФИО персонала
-    last_name = Column('personal_sname', String(200))
-    first_name = Column('personal_name', String(100))
-    middle_name = Column('personal_father_name', String(100))
-
-    # Фамилия и Имя персонала транслитом
-    last_name_translit = Column('personal_translit_sname', String(100))
-    first_name_translit = Column('personal_translit_name', String(100))
-
-    work_email = Column('personal_work_email', String(50))
-    identify_code = Column('personal_identification_number', String(150))
-
-    def __repr__(self):
-        full_name = ' '.join(filter(None, [self.last_name, self.first_name, self.middle_name]))
-
-        return '<Personnel {}>'.format(full_name)
-    
-    def __str__(self):
-        return ' '.join(filter(None, [self.last_name, self.first_name, self.middle_name]))
-
-
-class Teacher(Base):
-    """
-    Модель "Преподаватель"
-    """
-
-    __tablename__ = 'univer_teacher'
-
-    id = Column('teacher_id', Integer, primary_key=True)
-    personnel_id = Column('personal_id', ForeignKey('univer_personal.personal_id'))
-    personnel = relationship('Personnel')
-    status = Column('status', Integer)
-
-    def __repr__(self):
-        return '<Teacher {}>'.format(self.personnel)
-    
-    def __str__(self):
-        return str(self.personnel)
-
-
 class AcademCalendar(Base):
     """
     Модель "Академический календарь"
@@ -571,7 +357,7 @@ class EducPlan(Base):
 
     id = Column('educ_plan_id', Integer, primary_key=True)
     speciality_id = Column('speciality_id', ForeignKey('univer_speciality.speciality_id'))
-    speciality = relationship(Speciality)
+    speciality = relationship('Speciality')
     education_form_id = Column(ForeignKey('univer_education_form.education_form_id'))
     education_form = relationship('EducationForm')
     year = Column('educ_plan_adm_year', Integer)
@@ -600,7 +386,7 @@ class EducPlanPos(Base):
 
     # Дисциплина
     subject_id = Column('subject_id', ForeignKey('univer_subject.subject_id'))
-    subject = relationship(Subject)
+    subject = relationship('Subject')
 
     # Тип контроля
     controll_type_id = Column(ForeignKey('univer_controll_type.controll_type_id'))
@@ -627,7 +413,7 @@ class Attendance(Base):
     grade = Column('ball', Float)
     was = Column(Boolean)
     student_id = Column(ForeignKey('univer_students.students_id'), primary_key=True)
-    student = relationship(Student)
+    student = relationship('Student')
     group_id = Column(ForeignKey('univer_group.group_id'), primary_key=True)
     group = relationship('Group')
 
@@ -648,15 +434,15 @@ class Group(Base):
 
     id = Column('group_id', Integer, primary_key=True)
     educ_plan_pos_id = Column('educ_plan_pos_id', ForeignKey('univer_educ_plan_pos.educ_plan_pos_id'))
-    educ_plan_pos = relationship(EducPlanPos, backref='groups')
+    educ_plan_pos = relationship('EducPlanPos', backref='groups')
     teacher_id = Column('teacher_id', ForeignKey('univer_teacher.teacher_id'))
-    teacher = relationship(Teacher)
+    teacher = relationship('Teacher')
     year = Column('group_year', Float)
     semester = Column('group_semestr', Integer)
     educ_type_id = Column('educ_type_id', ForeignKey('univer_educ_type.educ_type_id'))
-    educ_type = relationship(EducType)
+    educ_type = relationship('EducType')
     lang_division_id = Column('lang_division_id', ForeignKey('univer_lang_division.lang_division_id'))
-    lang_division = relationship(LangDivision)
+    lang_division = relationship('LangDivision')
 
     # Семестр повторного обучения
     retake_semester = Column('group_retake_semestr', Integer)
@@ -677,9 +463,9 @@ class GroupStudent(Base):
 
     id = Column('group_student_id', Integer, primary_key=True)
     group_id = Column(ForeignKey('univer_group.group_id'))
-    group = relationship(Group, backref='group_students')
+    group = relationship('Group', backref='group_students')
     student_id = Column(ForeignKey('univer_students.students_id'))
-    student = relationship(Student)
+    student = relationship('Student')
 
 
 class Controll(Base):
