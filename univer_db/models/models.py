@@ -490,23 +490,6 @@ class Controll(Base):
         return self.name_ru
 
 
-class Control(Base):
-    """
-    Модель "Контроль"
-    """
-
-    __tablename__ = 'univer_control'
-
-    id = Column('control_id', Integer, primary_key=True)
-    name_ru = Column('control_name_ru', String(100))
-
-    def __repr__(self):
-        return '<Control {} (id={})>'.format(self, self.id)
-    
-    def __str__(self):
-        return self.name_ru
-
-
 class ControllType(Base):
     """
     Модель "Тип контроля"
