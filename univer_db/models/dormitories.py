@@ -39,7 +39,7 @@ class DormitoryRoom(Base):
     id = Column('dormitory_room_id', Integer, primary_key=True)
 
     # Общежитие
-    dormitory_id = Column(ForeignKey('platonus_univer_dormitories'))
+    dormitory_id = Column(ForeignKey('platonus_univer_dormitories.dormitoryID'))
     dormitory = relationship('Dormitory')
 
     # Этаж
