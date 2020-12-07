@@ -83,6 +83,9 @@ class Student(Base):
     # Электронная почта
     email = Column('students_email', String(25))
 
+    # Курс
+    course = Column('students_curce_number', Integer)
+
     # Документ
     document_identity_type_id = Column('students_document_identity_type', ForeignKey('univer_document_identity.document_identity_type'))
     document_identity_type = relationship('DocumentIdentity')
