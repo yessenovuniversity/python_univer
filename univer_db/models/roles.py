@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, Date
 from sqlalchemy.orm import relationship
 
 from univer_db.orm import get_base
+from univer_db.models import PaymentForm
 
 
 Base = get_base()
@@ -65,6 +66,10 @@ class Student(Base):
     enrollment_type_id = Column(ForeignKey('univer_enrollment_type.enrollment_type_id'))
     enrollment_type = relationship('EnrollmentType')
 
+    # Тип оплаты
+    payment_form_id = Column(ForeignKey('univer_payment_forms.payment_form_id'))
+    payment_form = relationship('PaymentForm')
+
     # Пол
     sex = Column('students_sex', Integer)
 
@@ -75,6 +80,21 @@ class Student(Base):
     last_name = Column('students_sname', String(100))
     first_name = Column('students_name', String(100))
     middle_name = Column('students_father_name', String(100))
+
+    # ФИО студента в дательном падеже (На русском языке)
+    dative_last_name_ru = Column('students_dative_last_name_ru', String(100))
+    dative_first_name_ru = Column('students_dative_first_name_ru', String(100))
+    dative_middle_name_ru = Column('students_dative_middle_name_ru', String(100))
+
+    # ФИО студента в дательном падеже (На казахском языке)
+    dative_last_name_kz = Column('students_dative_last_name_kz', String(100))
+    dative_first_name_kz = Column('students_dative_first_name_kz', String(100))
+    dative_middle_name_kz = Column('students_dative_middle_name_kz', String(100))
+
+    # ФИО студента в дательном падеже (На английском языке)
+    dative_last_name_en = Column('students_dative_last_name_en', String(100))
+    dative_first_name_en = Column('students_dative_first_name_en', String(100))
+    dative_middle_name_en = Column('students_dative_middle_name_en', String(100))
 
     # Фамилия и Имя студента транслитом
     last_name_translit = Column('students_sname_intern', String(100))
@@ -110,6 +130,18 @@ class Student(Base):
 
     # Год начала действия учебного плана
     educ_plan_adm_year = Column(Integer)
+
+    @property
+    def dative_full_name_ru(self):
+        return ' '.join(filter(None, [self.dative_last_name_ru, self.dative_first_name_ru, self.dative_middle_name_ru]))
+
+    @property
+    def dative_full_name_kz(self):
+        return ' '.join(filter(None, [self.dative_last_name_kz, self.dative_first_name_kz, self.dative_middle_name_kz]))
+
+    @property
+    def dative_full_name_en(self):
+        return ' '.join(filter(None, [self.dative_last_name_en, self.dative_first_name_en, self.dative_middle_name_en]))
 
     def __repr__(self):
         return '<Student {} (id={} user={} status={})>'.format(self, self.id, self.user_id, self.status)
