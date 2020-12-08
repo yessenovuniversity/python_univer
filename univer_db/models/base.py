@@ -114,3 +114,29 @@ class EduLevel(Base):
     
     def __str__(self):
         return self.name_ru
+
+
+class EnrollmentType(Base):
+    """
+    Модель "Тип поступления"
+    Статус: Выполняется
+    """
+
+    __tablename__ = 'univer_enrollment_type'
+
+    # Идентификатор
+    id = Column('enrollment_type_id', Integer, primary_key=True)
+
+    # Наименование
+    name_ru = Column('enrollment_type_name_ru', String(100))
+    name_kz = Column('enrollment_type_name_kz', String(100))
+    name_en = Column('enrollment_type_name_en', String(100))
+
+    # Статус
+    status = Column(Integer)
+
+    def __repr__(self):
+        return '<EnrollmentType {} (id={} status={})>'.format(self, self.id, self.status)
+    
+    def __str__(self):
+        return self.name_ru

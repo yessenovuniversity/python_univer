@@ -67,7 +67,7 @@ class Student(Base):
     enrollment_type = relationship('EnrollmentType')
 
     # Тип оплаты
-    payment_form_id = Column(ForeignKey('univer_payment_forms.payment_form_id'))
+    payment_form_id = Column('payment_forms_id', ForeignKey('univer_payment_forms.payment_form_id'))
     payment_form = relationship('PaymentForm')
 
     # Пол
@@ -82,19 +82,19 @@ class Student(Base):
     middle_name = Column('students_father_name', String(100))
 
     # ФИО студента в дательном падеже (На русском языке)
-    dative_last_name_ru = Column('students_dative_last_name_ru', String(100))
-    dative_first_name_ru = Column('students_dative_first_name_ru', String(100))
-    dative_middle_name_ru = Column('students_dative_middle_name_ru', String(100))
+    dative_last_name_ru = Column('students_dative_sname_ru', String(100))
+    dative_first_name_ru = Column('students_dative_name_ru', String(100))
+    dative_middle_name_ru = Column('students_dative_father_name_ru', String(100))
 
     # ФИО студента в дательном падеже (На казахском языке)
-    dative_last_name_kz = Column('students_dative_last_name_kz', String(100))
-    dative_first_name_kz = Column('students_dative_first_name_kz', String(100))
-    dative_middle_name_kz = Column('students_dative_middle_name_kz', String(100))
+    dative_last_name_kz = Column('students_dative_sname_kz', String(100))
+    dative_first_name_kz = Column('students_dative_name_kz', String(100))
+    dative_middle_name_kz = Column('students_dative_father_name_kz', String(100))
 
     # ФИО студента в дательном падеже (На английском языке)
-    dative_last_name_en = Column('students_dative_last_name_en', String(100))
-    dative_first_name_en = Column('students_dative_first_name_en', String(100))
-    dative_middle_name_en = Column('students_dative_middle_name_en', String(100))
+    dative_last_name_en = Column('students_dative_sname_en', String(100))
+    dative_first_name_en = Column('students_dative_name_en', String(100))
+    dative_middle_name_en = Column('students_dative_father_name_en', String(100))
 
     # Фамилия и Имя студента транслитом
     last_name_translit = Column('students_sname_intern', String(100))
@@ -132,12 +132,56 @@ class Student(Base):
     educ_plan_adm_year = Column(Integer)
 
     @property
+    def payment_info_ru(self):
+        if self.payment_form_id == 2:
+            return 'на платной основе'
+        elif self.payment_form_id == 5:
+            return 'на основе государственного образовательного гранта'
+
+
+    @property
+    def payment_info_kz(self):
+        if self.payment_form_id == 2:
+            return 'ақылы негізде'
+        elif self.payment_form_id == 5:
+            return 'мемлекеттік білім беру гранты негізінде'
+
+
+    @property
+    def edu_level_info_ru(self):
+        if self.edu_level_id == 1:
+            return '(бакалавриат, 4 года)'
+        elif self.edu_level_id == 3:
+            return 'по сокращенной образовательной программе на базе среднего профессионального образования'
+        elif self.edu_level_id == 2:
+            return 'по сокращенной образовательной программе на базе высшего образования'
+
+
+    @property
+    def edu_level_info_kz(self):
+        if self.edu_level_id == 1:
+            return '(бакалавриат, 4 жыл)'
+        elif self.edu_level_id == 3:
+            return 'орта кәсіптік білім негізінде қысқартылған білім беру бағдарламасы бойынша күндізгі білім беру нысаны'
+        elif self.edu_level_id == 2:
+            return 'жоғары білім негізінде қысқартылған білім беру бағдарламасы бойынша күндізгі білім беру нысаны'
+
+
+    @property
     def dative_full_name_ru(self):
-        return ' '.join(filter(None, [self.dative_last_name_ru, self.dative_first_name_ru, self.dative_middle_name_ru]))
+        dative_last_name_ru = self.dative_last_name_ru if self.dative_last_name_ru else self.last_name
+        dative_first_name_ru = self.dative_first_name_ru if self.dative_first_name_ru else self.first_name
+        dative_middle_name_ru = self.dative_middle_name_ru if self.dative_middle_name_ru else self.middle_name
+
+        return ' '.join(filter(None, [dative_last_name_ru, dative_first_name_ru, dative_middle_name_ru]))
 
     @property
     def dative_full_name_kz(self):
-        return ' '.join(filter(None, [self.dative_last_name_kz, self.dative_first_name_kz, self.dative_middle_name_kz]))
+        dative_last_name_kz = self.dative_last_name_kz if self.dative_last_name_kz else self.last_name
+        dative_first_name_kz = self.dative_first_name_kz if self.dative_first_name_kz else self.first_name
+        dative_middle_name_kz = self.dative_middle_name_kz if self.dative_middle_name_kz else self.middle_name
+
+        return ' '.join(filter(None, [dative_last_name_kz, dative_first_name_kz, dative_middle_name_kz]))
 
     @property
     def dative_full_name_en(self):
