@@ -21,6 +21,9 @@ class Sheet(Base):
     sheet_type_id = Column(ForeignKey('univer_sheet_type.sheet_type_id'))
     sheet_type = relationship('SheetType')
 
+    # Дата и время закрытия
+    date_keep = Column(DateTime)
+
     # Группа
     group_id = Column(ForeignKey('univer_group.group_id'))
     group = relationship('Group')
