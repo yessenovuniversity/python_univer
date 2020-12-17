@@ -443,6 +443,12 @@ class MarkType(Base):
     # Символ оценки
     symbol = Column('mark_type_symbol', String(10))
 
+    # Минимальное значение
+    min_val = Column('mark_type_minval', Integer)
+
+    # Максимальное значение
+    max_val = Column('mark_type_maxval', Integer)
+
     # GPA
     gpa = Column('mark_type_gpa', Float)
 
