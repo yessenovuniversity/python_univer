@@ -252,6 +252,8 @@ class EducPlan(Base):
     speciality = relationship('Speciality')
     education_form_id = Column(ForeignKey('univer_education_form.education_form_id'))
     education_form = relationship('EducationForm')
+    edu_level_id = Column(ForeignKey('univer_edu_levels.edu_level_id'))
+    edu_level = relationship('EduLevel')
     year = Column('educ_plan_adm_year', Integer)
 
     def __repr__(self):
@@ -442,6 +444,12 @@ class MarkType(Base):
 
     # Символ оценки
     symbol = Column('mark_type_symbol', String(10))
+
+    # Минимальное значение
+    min_val = Column('mark_type_minval', Integer)
+
+    # Максимальное значение
+    max_val = Column('mark_type_maxval', Integer)
 
     # GPA
     gpa = Column('mark_type_gpa', Float)
