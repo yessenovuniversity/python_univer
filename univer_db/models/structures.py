@@ -76,6 +76,8 @@ class Chair(Base):
     __tablename__ = 'univer_chair'
 
     id = Column('chair_id', Integer, primary_key=True)
+    faculty_id = Column(ForeignKey('univer_faculty.faculty_id'))
+    faculty = relationship('Faculty')
     status = Column(Integer)
     name_kz = Column('chair_name_kz', String(200))
     name_ru = Column('chair_name_ru', String(200))
