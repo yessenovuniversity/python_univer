@@ -130,11 +130,11 @@ class StudentDormitoryRoomLink(Base):
     __tablename__ = 'univer_student_dormitory_room_link'
 
     # Студент
-    student_id = Column(ForeignKey('univer_students.students_id'))
+    student_id = Column(ForeignKey('univer_students.students_id'), primary_key=True)
     student = relationship('Student')
 
     # Комната общежития
-    dormitory_room_id = Column(ForeignKey('univer_dormitory_rooms.dormitory_room_id'))
+    dormitory_room_id = Column(ForeignKey('univer_dormitory_rooms.dormitory_room_id'), primary_key=True)
     dormitory_room = relationship('DormitoryRoom')
 
     # Год
