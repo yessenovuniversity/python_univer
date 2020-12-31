@@ -134,7 +134,7 @@ class StudentDormitoryRoomLink(Base):
     student = relationship('Student')
 
     # Комната общежития
-    dormitory_room_id = Column(ForeignKey('univer_dormitory_rooms'))
+    dormitory_room_id = Column(ForeignKey('univer_dormitory_rooms.dormitory_room_id'))
     dormitory_room = relationship('DormitoryRoom')
 
     # Год
