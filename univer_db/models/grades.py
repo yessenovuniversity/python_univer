@@ -15,7 +15,7 @@ class ControllTypeMarkTypeLink(Base):
     __tablename__ = 'univer_controll_type_mark_type_link'
 
     # Тип контроля
-    controll_type_id = Column(ForeignKey('univer_controll_type_id.controll_type_id'), primary_key=True)
+    controll_type_id = Column(ForeignKey('univer_controll_type.controll_type_id'), primary_key=True)
     controll_type = relationship('ControllType')
 
     # Тип оценки
