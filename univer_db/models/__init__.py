@@ -5,3 +5,4 @@ from .orders import *
 from .dormitories import *
 from .structures import *
 from .sheets import *
+from .grades import *
