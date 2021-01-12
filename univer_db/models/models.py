@@ -281,6 +281,9 @@ class EducPlanPos(Base):
     educ_plan_id = Column('educ_plan_id', ForeignKey('univer_educ_plan.educ_plan_id'))
     educ_plan = relationship('EducPlan')
 
+    # Код дисциплины
+    code = Column('rup_ru', String(50))
+
     # Дисциплина
     subject_id = Column('subject_id', ForeignKey('univer_subject.subject_id'))
     subject = relationship('Subject')
