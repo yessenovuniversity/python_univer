@@ -10,6 +10,3 @@ autopep8 = "*"
 [packages]
 sqlalchemy = "*"
 pyodbc = "*"
-
-[requires]
-python_version = "3.8"
