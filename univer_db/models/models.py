@@ -256,6 +256,9 @@ class EducPlan(Base):
     edu_level = relationship('EduLevel')
     year = Column('educ_plan_adm_year', Integer)
 
+    # Статус
+    status = Column(Integer)
+
     def __repr__(self):
         return "<EducPlan {} {}>".format(self.speciality, self.year)
     
@@ -288,6 +291,9 @@ class EducPlanPos(Base):
 
     # Семестр
     semester = Column('educ_plan_pos_semestr', Integer)
+
+    # Статус
+    status = Column(Integer)
 
     def __repr__(self):
         return "<EducPlanPos {}: {} ({} семестр)>".format(self.educ_plan, self.subject, self.semester)
