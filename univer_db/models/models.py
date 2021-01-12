@@ -69,6 +69,9 @@ class Subject(Base):
     name_kz = Column('subject_name_kz', String(500))
     name_ru = Column('subject_name_ru', String(500))
     name_en = Column('subject_name_en', String(500))
+    description_kz = Column('subject_description_kz', String)
+    description_ru = Column('subject_description_ru', String)
+    description_en = Column('subject_description_en', String)
     status = Column(Integer)
 
     def __repr__(self):
