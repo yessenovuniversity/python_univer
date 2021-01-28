@@ -28,6 +28,9 @@ class Sheet(Base):
     group_id = Column(ForeignKey('univer_group.group_id'))
     group = relationship('Group')
 
+    # Дата и время изменения
+    updated_at = Column(DateTime)
+
     def __repr__(self):
         return '<Sheet {}>'.format(self)
     
