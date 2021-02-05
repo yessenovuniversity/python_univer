@@ -486,6 +486,9 @@ class Progress(Base):
     # Академический год
     academ_year = Column(Integer)
 
+    # Академический семестр
+    academ_semester = Column('semestr', Integer)
+
     # Студент
     student_id = Column(ForeignKey('univer_students.students_id'))
     student = relationship('Student')
