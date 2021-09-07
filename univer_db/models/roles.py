@@ -28,6 +28,9 @@ class User(Base):
     # Временный пароль
     temppass = Column('user_temppass', String(50))
 
+    # Права доступа пользователя
+    access = Column('user_access', Integer, default=0)
+
     def __repr__(self):
         return '<User {} (id={})>'.format(self, self.id)
     
