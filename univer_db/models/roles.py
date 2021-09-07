@@ -22,6 +22,12 @@ class User(Base):
     # Логин
     username = Column('user_login', String(50))
 
+    # Пароль
+    password = Column('user_password', String(128))
+
+    # Временный пароль
+    temppass = Column('user_temppass', String(50))
+
     def __repr__(self):
         return '<User {} (id={})>'.format(self, self.id)
     
@@ -36,6 +42,9 @@ class Student(Base):
     """
 
     __tablename__ = 'univer_students'
+    __table_args__ = {
+        'implicit_returning': False
+    }
 
     # Идентификатор
     id = Column('students_id', Integer, primary_key=True)
