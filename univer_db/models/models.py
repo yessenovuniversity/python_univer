@@ -69,6 +69,9 @@ class Subject(Base):
     name_kz = Column('subject_name_kz', String(500))
     name_ru = Column('subject_name_ru', String(500))
     name_en = Column('subject_name_en', String(500))
+    description_kz = Column('subject_description_kz', String)
+    description_ru = Column('subject_description_ru', String)
+    description_en = Column('subject_description_en', String)
     status = Column(Integer)
 
     def __repr__(self):
@@ -256,6 +259,9 @@ class EducPlan(Base):
     edu_level = relationship('EduLevel')
     year = Column('educ_plan_adm_year', Integer)
 
+    # Статус
+    status = Column(Integer)
+
     def __repr__(self):
         return "<EducPlan {} {}>".format(self.speciality, self.year)
     
@@ -278,6 +284,9 @@ class EducPlanPos(Base):
     educ_plan_id = Column('educ_plan_id', ForeignKey('univer_educ_plan.educ_plan_id'))
     educ_plan = relationship('EducPlan')
 
+    # Код дисциплины
+    code = Column('rup_ru', String(50))
+
     # Дисциплина
     subject_id = Column('subject_id', ForeignKey('univer_subject.subject_id'))
     subject = relationship('Subject')
@@ -288,6 +297,9 @@ class EducPlanPos(Base):
 
     # Семестр
     semester = Column('educ_plan_pos_semestr', Integer)
+
+    # Статус
+    status = Column(Integer)
 
     def __repr__(self):
         return "<EducPlanPos {}: {} ({} семестр)>".format(self.educ_plan, self.subject, self.semester)
@@ -473,6 +485,9 @@ class Progress(Base):
 
     # Академический год
     academ_year = Column(Integer)
+
+    # Академический семестр
+    academ_semester = Column('semestr', Integer)
 
     # Студент
     student_id = Column(ForeignKey('univer_students.students_id'))
