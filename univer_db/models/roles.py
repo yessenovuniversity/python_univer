@@ -82,6 +82,9 @@ class Student(Base):
     payment_form_id = Column('payment_forms_id', ForeignKey('univer_payment_forms.payment_form_id'))
     payment_form = relationship('PaymentForm')
 
+    country_id = Column(ForeignKey('univer_country.country_id'))
+    country = relationship('Country')
+
     # Пол
     sex = Column('students_sex', Integer)
 

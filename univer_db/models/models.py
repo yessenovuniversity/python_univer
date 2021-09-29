@@ -529,3 +529,23 @@ class Progress(Base):
     
     def __str__(self):
         return '{} - {}'.format(self.student, self.subject)
+
+
+class Country(Base):
+    __tablename__ = 'univer_country'
+
+    id = Column('country_id', Integer, primary_key=True)
+    status = Column(Integer)
+    name_ru = Column('country_name_ru', String(500))
+    name_kz = Column('country_name_kz', String(500))
+    name_en = Column('country_name_en', String(500))
+    code = Column('country_code', Integer)
+    current = Column('country_current', Integer)
+    letter_code = Column('country_letter_code', String(10))
+    alfa3_code = Column(String(5))
+
+    def __repr__(self):
+        return '<Country {}>'.format(self)
+    
+    def __str__(self):
+        return self.name_ru
