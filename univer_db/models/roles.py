@@ -88,6 +88,8 @@ class Student(Base):
     # Пол
     sex = Column('students_sex', Integer)
 
+    marital_status = Column('students_marital_status', Integer)
+
     # Дата рождения
     birth_date = Column('students_birth_date', DateTime)
 
