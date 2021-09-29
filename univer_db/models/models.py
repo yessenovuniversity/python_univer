@@ -497,6 +497,11 @@ class Progress(Base):
     subject_id = Column(ForeignKey('univer_subject.subject_id'))
     subject = relationship('Subject')
 
+    # Наименование дисциплины
+    subject_name_ru = Column(String(500))
+    subject_name_kz = Column(String(500))
+    subject_name_en = Column(String(500))
+
     # Тип оценки
     mark_type_id = Column(ForeignKey('univer_mark_type.mark_type_id'))
     mark_type = relationship('MarkType')
